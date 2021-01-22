@@ -1,0 +1,31 @@
+.abc{
+	font: cursive;
+	position: relative;
+}
+.header:before{
+	background:transparent;
+}
+.header{
+	padding: 20px;
+	padding-bottom: 200px;
+	width:100%;
+	height:100%;
+	/* text-align: center; */
+	background-image: linear-gradient(to right,rgba(100,158,255,0.5),rgba(255,128,255,0.3));
+	/* background-color:red; */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	clip-path: polygon(100% 0% , 100% 100% ,0% 100% , 0 0);
+	position: relative;
+}
+/* .butn{
+	/* width: 100%; */
+/* } */ */
+h1{
+	text-align: center;
+	/* font-family: 'Satisfy', cursive; */
+}
+.ncontainer{
+	width:40%;
+	margin: auto;
+}

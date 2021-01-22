@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{%block load%}
+	<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{%endblock%}
+{% block title %}
+About us 
+{% endblock %}
+
+{% block content %}
+
+<div class="k">
+	<div class="section1" id="p1">
+		<span class="name">About US</span>
+		<span class="border"></span>
+		<p>
+			A website providing business person access to store their data. 
+			Earlier people use to store their data in registers and they had to perform additional calculation in order to keep a track of their business. 
+			By this website they will be able to maintain their records of earnings , spending’s,
+			and also at the end of the month they can know on which sector the business is facing loss, 
+			and how to manage money in that sector. 
+			By which they can maximize their profit and searching for a particular record would be much easier. 
+			The graphical representation of the spending and earnings of each month will help them to analyze the market demand according to which they can increase their stocks of that particular month. Huge looses will be minimized by this. Each user will be having unique user ID and password.
+		</p>
+		<p class="feat">
+			Features provided: 
+			<ul>
+				<li>Add Credit/Debit Amount with one click</li>
+				<li>Evaluate your Business</li>
+			</ul>
+		</p>
+		<p>
+			I Manish Bharti along with my team members Utkarsh Yashraj, Mohammad Muraad Wani, Anand Ranjan,  
+			2nd year students of MIT ADT University pursuing BTech in computer science working on in this mini project 
+			tilted as Business Book. 
+			We explored this idea while studying engineer finance and economics. And by means of mini project we got  
+			this opportunity to express our idea by leaning some programming  languages  like python, HTML, CSS.
+			We find this idea having a great scope in near future as it can help various small as well as big companies. 
+			And we  did not find this project  anywhere so we decided to do this.
+		</p>
+
+	</div>
+</div>
+
+
+{% endblock %}

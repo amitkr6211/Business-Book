@@ -1,0 +1,57 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{%endblock%}
+{% block title %}
+{{ user.username}}'s Profile
+{%endblock%}
+
+{% block content %}
+<div class="back">
+    <div class="profile">
+        <img src="{{user.userprofile.image.url}}">
+        <div class="profile-text">
+            <h2>Usename: {{user.username}}</h2>
+            <h2>Age: {{age}}</h3>
+            <h2>Email: {{user.email}}</h3>
+            <h2>Business Name :{{bu}}</h3>
+        </div> 
+    </div>
+</div>
+<!-- <div class="wrapper">
+    <div class="left">
+        <img class="rounded-circle account-img" src="{{user.userprofile.image.url}}">
+        <h4>Hello There!</h4>
+    </div>
+    <div class="right">
+        <div class="info">
+            <h3>Information</h3>
+            <div class="info-data">
+                <div class="data">
+                    <h2>Name</h2>
+                    <p>{{ user.username}}</p>
+                </div>
+                <div class="data">
+                    <h2>Email</h2>
+                    <p>{{ user.email}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="info">
+            <div class="info-data">
+                <div class="data">
+                    <h2>Age</h2>
+                    <p>{{ user.age}}</p>
+                </div>
+                <div class="data">
+                    <h2>Business Name</h2>
+                    <p>{{ user.businessname}}</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>   
+</div> -->
+{%endblock%}

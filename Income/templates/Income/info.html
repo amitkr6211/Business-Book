@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/info.css' %}">
+{%endblock%}
+{% block title %}
+    Formulas
+{%endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="container text-center">
+            <h1 class="welcome">Welcome , {{ request.user.username }}</h1>
+            <span class="border"></span>
+            <h3>Formula used to compute Results</h3>
+            <div class="container txt-center">
+                <!-- <span class="border"></span> -->
+                <!-- <h3></h3> -->
+                <table>
+                    <tr>
+                        <th>Formula </th>
+                        <!-- <th>Result </th>/ -->
+                    </tr>
+                    <tr>
+                        <td>BEP Quantity=FC/(SP-VC)</td>
+                        <!-- <td>{{bepq}}</td> -->
+                    <tr>
+                    <tr>
+                        <td>BEP Sales=( BEP Quantity ) *SP </td>
+                        <!-- <td>{{beps}}</td> -->
+                    <tr>
+                    <tr>
+                        <td>Contribution = SP-VC</td>
+                        <!-- <td>{{cont}}</td> -->
+                    <tr>
+                    <tr>
+                        <td>Actual Sales - BEP Sales</td>
+                        <!-- <td>{{mos}}</td> -->
+                    <tr>
+                </table>
+
+                <h3> Abbreviations used</h3>
+                <ul>
+                    <li>FC  : Fixed Cost </li>
+                    <li>VC  : Variable Cost</li>
+                    <li>SP  : Selling Price</li>
+                    <li>AS  : Actual Cost</li>
+                    <li>BEP : Break Even Point</li>
+                </ul>
+                <!-- <br> -->
+                <!-- <p class="text-center">Want to see how they are calculate ?? <a href="/info">Click</a></p> -->
+            </div>
+        </div>
+    </div>
+{%endblock%}

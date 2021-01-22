@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/compute.css' %}">
+{%endblock%}
+{% block title %}
+    Compute
+{%endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <h1 class="welcome">Welcome , {{ request.user.username }}</h1>
+            <span class="border"></span>
+            <h3>Fill in the details to see the results</h3>
+            <div class="ncontainer">
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form | crispy}}
+                        <div class="text-center">
+                            <button class="btn btn-success" type="submit">Compute</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- <div class="container text-center">
+                <ul>
+                    <li>BEP Qty. : {{bepq}}</li>
+                    <li>BEP Sales : {{beps}}</li>
+                    <li>Contribution : {{cont}}</li>
+                    <li>Margin of Safety : {{moss}}</li>
+                </ul>
+            </div> -->
+            <div class="container ">
+                <span class="border"></span>
+                <h3>Results</h3>
+                <table>
+                    <tr>
+                        <th>Entity </th>
+                        <th>Result </th>
+                    </tr>
+                    <tr>
+                        <td>BEP Quantity</td>
+                        <td>{{bepq}}</td>
+                    <tr>
+                    <tr>
+                        <td>BEP Sales</td>
+                        <td>{{beps}}</td>
+                    <tr>
+                    <tr>
+                        <td>Contribution</td>
+                        <td>{{cont}}</td>
+                    <tr>
+                    <tr>
+                        <td>Margin of Safety</td>
+                        <td>{{mos}}</td>
+                    <tr>
+                </table>
+                <br>
+                <p class="text-center">Want to see how they are calculate ?? <a href="/info">Click</a></p>
+            </div>
+        </div>
+    </div>
+{%endblock%}

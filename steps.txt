@@ -1,0 +1,268 @@
+create super user : python3 manage.py createsuperuser 
+(make to make migrations : that will add default tables)
+
+Django has built-in ORM (Object Relation Mapper) ,  it allows us to acess the database and easy to use object oriented way . 
+
+Each class is going to be a new table in database
+
+------------------------------------
+from django.utils import timezone
+date_posted =models.DateTimeField(default=timezone.now)
+
+--------------------------------------------
+****
+When ever you create a model do these following :
+->First the app should be in INSTALLED_APPS
+->inside that app admin.py , model should be registers
+  admin.site.register(model_name)
+->Now your app will be visible on admin interface
+-> makemigrations
+->migrate
+--------------------------------------------
+-> to add user field :
+from django.contrib.auth.models import user
+author=models.ForeignKey(User , on_delete  = models.CASCADE)
+
+to view the actual SQL queries that run when we make migrations 
+-> manage.py makemigrations
+-> extract the .py file in migrations which is generated
+-> python manage.py sqlmigrate (app_name) (migration_no)
+
+Django does this work (of writing sql itself).
+
+migration helps us to update the database
+
+
+--------------------------------------------------
+moving into python shell
+>>import the models
+>>User.objects.all()
+ also filter user based on username
+>>user=User.objects.filter(username='').first() -> if multiple exists
+>> user.id or user.pk
+Now you can create objects for your model
+>>UserProfile1=UserProfile(user=user,name='amit',email='')
+
+
+dunder methods , magic methods
+
+def __str__(self):
+    return self.title
+
+-> when u will print the object title will be displayed
+
+user(fk).post(model_name)_set.all()
+
+fk.post(model)_set.create(fill the attributes other than user since django knows)
+
+
+Inside views you can extract the data from database and send the data to the html files .
+
+ex:
+  context = {
+      'posts':post.objects.all()
+  }
+  return render(request , '',context)
+
+--------------------------------------------------
+registeration :
+
+to go views and create your form :
+
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+    form=UserCreationForm()
+    return render(request,'register/register.html',{'form':form})
+
+-------------------------------------------------
+I personally create a main application that contains only templates and views
+
+--------------------------------------------------
+register.html 
+ <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Sign up</legend>
+            {{ form }}
+        </fieldset>
+    </form>
+
+--------------------------------------------
+STEPS TO ADD CRISPY FORM :
+intall CRISPY : pip install django-crispy-forms
+add to INSTALLED_APPS :  'crispy_forms',
+load crispy : {% load crispy_forms_tags %}
+use it : {{form | crispy }}
+
+CRISPY_TEMPLATE_PACK='bootstrap4' -> settings
+-------------------------------------------
+
+Till now u have just created a form , nothing will happen if one click on Regsister button .
+-> it will just refresh the page since we have not specified where to post the submitted data
+
+-> if post request then validate form and save that into database 
+-> else simply display the form : form = UserCreationForm
+
+-------------------------------------------
+messages in django
+
+from django.contrib import messages
+messages.debug
+messages.info
+messages.success
+messages.warning
+messages.error
+
+also need to add the below line in base.html just beform bloack content
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+{% block content %}
+------------------------------------------------------
+def register(request):
+    if request.method=="POST":
+        form=UserCreationForm(request.POST)
+        #instantiates the form with the post data
+
+        if form.is_valid():
+            form.save()
+            username=form.cleaned_data.get('username')
+            #form data is stored in a cleaned dictionary 
+            messages.success(request , username + " , your account has been created")
+            return redirect('/')
+
+    else:
+        form=UserCreationForm()
+    return render(request,'register/register.html',{'form':form})
+---------------------------------------------------
+Now , if you want to more fields to this form :
+-> you have to make another form that inherits from UserCreationForm
+
+->create a new file named forms.py
+
+from django import forms
+
+class UserRegisterForm(UserCreationForm):
+    email=forms.email
+
+    class Meta:
+        model=User
+        fieds =[] 
+----------------------------------------------
+Creating Authentication System :
+
+import login and logout within our project urls.py modules
+
+
+    path('',include('django.contrib.auth.urls')),
+
+->next you need to create login.html inside template/registration
+<form method="POST" class="form-group">
+        {% csrf_token %}
+        {{form | crispy }}
+        <button type="submit" class="btn btn-success">Login</button>
+        <p>Dont have a acc ? <a href="/register">Register Here</a></p>
+    </form>
+
+add the following lines to settings to work:
+
+LOGIN_REDIRECT_URL ="/"
+LOGOUT_REDIRECT_URL ="/"
+
+only signed user can access these :
+
+Every django page has a user attribute 
+{% if user.is_authenticated %}
+    {%block content%}
+    {%endblock%}
+{%else%}
+    <p>Login<a href="/login">HERE</a></p>
+{% endif %}
+
+-------------------------------------------------------
+ 
+ from django.contrib.auth.decorators import login_required
+
+ @login_required
+ add this above any view 
+
+ ADD:
+ LOGIN_URL = /login 
+ this will redirect you to login page
+
+ /login/?next=/profile/ : after successful login  ,  u will be redirected to profile
+ ---------------------------------------------
+ Adding Profile Picture :
+
+create a new model , add image field in that , install PILLOW
+
+image=models.ImageField(default='default.jpg',upload_to='profile_pics')
+(add this in that new model class , with user as foreign key )
+the profile_pics will be created on its own .
+
+--------------------------------------------
+shell 
+user=User.objects.filter(username="amitkumar")[0]
+
+>>> user.userprofile   # the model name is written in lower case
+<UserProfile: UserProfile object (1)>
+
+user.userprofile.image
+<ImageFieldFile: profile_pics/keshav.jpeg>
+
+user.userprofile.image.width
+
+
+MEDIA_ROOT = '' #directory where the image will be saved 
+MEDIA_URL =''
+MEDIA_ROOT = os.path.join(BASE_DIR ,'media') 
+-> media directory will be located inside the base directory and the profie_pics will be inside that
+
+MEDIA_URL='/media/'
+->how the images will be accessed
+
+Add this to the settings
+---------------------------------
+Now this will be the path and this path can be used by the img src tag to display an image
+>>> user
+<User: amitkumar>
+>>> user.userprofile
+<UserProfile: UserProfile object (2)>
+>>> user.userprofile.image
+<ImageFieldFile: profile_pics/keshav.jpeg>
+>>> user.userprofile.image.url
+'/media/profile_pics/keshav.jpeg'
+------------------------------------------------
+to make your media work into the browser add the following lines in urls..py of project
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+----------------------------------------------------
+on creating user the user profile should be automatically created :
+
+to do so we have used django signals:
+
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from .models import UserProfile
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+    instance.userprofile.save()
+

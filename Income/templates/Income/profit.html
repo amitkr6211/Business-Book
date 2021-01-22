@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/spend.css' %}">
+{%endblock%}
+{% block title %}
+    Select
+{%endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <h1 class="welcome">Welcome , {{ request.user.username }}</h1>
+            <span class="border"></span>
+            <h3>Your Net Profit/Loss</h3>
+            <div class="container text-center">
+                <ul>
+                    <li>Total profit : {{profit}}</li>
+                    <li>Total Spending : {{spend}}</li>
+                    <li>Net Profit : {{net}}</li>
+                </ul>
+            </div>
+            <br>
+            <br>
+            <p class="text-center">Compute Other Factors . Click <a href="/compute">Here</a></a></p>
+        </div>
+    </div>
+{%endblock%}

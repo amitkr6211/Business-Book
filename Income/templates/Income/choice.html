@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/choice.css' %}">
+{%endblock%}
+{% block title %}
+    Select
+{%endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <div class="row text-center">
+				<div class="extradiv col-lg-6 col-md-12 col-12 footer-div abc">
+					<div>
+						<h1> Add Earning </h1>
+						<a href="/income"><button class="btn btn-success btn-large">Add Income</button></a>
+					</div>
+				</div>
+
+                <div class="extradiv col-lg-6 col-md-12 col-12 footer-div abc">
+					<div>
+						<h1> Add Spending </h1>
+						<a href="/spend"><button class="btn btn-large btn-success">Add Spending</button></a>
+					</div>
+                </div>
+
+                <div class="extradiv col-lg-12 col-md-12 col-12 footer-div abcd">
+					<div>
+						<h1> Calculate Profit/Loss </h1>
+						<a href="/profit"><button class="btn btn-large btn-success">Compute</button></a>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}

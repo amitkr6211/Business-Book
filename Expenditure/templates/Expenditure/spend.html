@@ -1,0 +1,49 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block load %}
+    <link rel="stylesheet" href="{% static 'css/spend.css' %}">
+{%endblock%}
+{% block title %}
+    Select
+{%endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <h1 class="welcome">Welcome , {{ request.user.username }}</h1>
+            <span class="border"></span>
+            <h3>Add Spending</h3>
+            <div class="ncontainer">
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{form | crispy}}
+                        <div class="text-center">
+                            <button class="btn btn-primary" type="submit">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container ">
+                <span class="border"></span>
+                <h3>Past Records</h3>
+                <table>
+                    <tr>
+                        <th>Date </th>
+                        <th>Expenditure (in rupee) </th>
+                        <th>description</th>
+                        <!-- <th>Count</th> -->
+                    </tr>
+                    {% for item in queryset %}
+                        <tr></tr>
+                            <td>{{item.date_posted}}</td>
+                            <td>{{item.spending}}</td>
+                            <td>{{item.des}}</td>
+                        <tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+    </div>
+{%endblock%}
